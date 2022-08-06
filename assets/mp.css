@@ -1,0 +1,38 @@
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    border: 1px solid #D6E9C6;
+    border-radius: 14px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.success > div {
+    margin-bottom: 10px;
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    border: 1px solid #FF0000;
+    border-radius: 14px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.error > div {
+    margin-bottom: 10px;
+}
+
+.pending {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    border: 1px solid #FFC200;
+    border-radius: 14px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.pending > div {
+    margin-bottom: 10px;
+}
