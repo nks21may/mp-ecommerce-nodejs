@@ -66,16 +66,20 @@ app.get("/detail", function (req, res) {
         });
 });
 
+
+/* Rendering the success page. */
 app.get("/success", (req, res) => {
-  res.render("success", req.query); // TODO hacer la pagina
+  res.render("success", req.query); 
 });
 
+/* Rendering the error page. */
 app.get("/error", (req, res) => {
-  res.render("error", req.query); // TODO hacer la pagina
+  res.render("error", req.query); 
 });
 
+/* Rendering the pending page. */
 app.get("/pending", (req, res) => {
-  res.render("pending", req.query); // TODO hacer la pagina
+  res.render("pending", req.query); 
 });
 
 app.listen(port);
