@@ -6,8 +6,8 @@ const mercadopago = require("mercadopago");
 const EXTERNAL_REFERENCE = process.env.EXTERNAL_REFERENCE || "nicolasdalessandro2@gmail.com";
 
 mercadopago.configure({
-    access_token: process.env.PROD_ACCESS_TOKEN || "APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398",
-    integrator_id: process.env.PROD_INTEGRATOR_ID || "dev_24c65fb163bf11ea96500242ac130004"
+    access_token: "APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398",
+    integrator_id: "dev_24c65fb163bf11ea96500242ac130004"
 });
 
 var port = process.env.PORT || 3000;
@@ -26,15 +26,16 @@ app.get("/", function (req, res) {
 
 /* This is the code that creates the preference and redirects to the checkout page. */
 app.get("/detail", function (req, res) {
+
     let preference = {
         items: [
             {
-                id: "1234",
-                title: req.query.title,
-                description: "Dispositivo móvil de Tienda e-commerce",
-                picture_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/" + req.query.img,
-                quantity: 1,
-                unit_price: parseFloat(req.query.price),
+              id: 1234,
+              title: req.query.title,
+              description: "Dispositivo móvil de Tienda e-commerce",
+              picture_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com" + req.query.img?.substring(1),
+              quantity: 1,
+              unit_price: parseFloat(req.query.price),
             },
         ],
         external_reference: EXTERNAL_REFERENCE,
@@ -46,8 +47,8 @@ app.get("/detail", function (req, res) {
         auto_return: "approved",
         notification_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/webhook",
         payer: {
-          name: "Lalo",
-          surname: "Landa",
+          name: "lalo",
+          surname: "landa",
           email: "test_user_63274575@testuser.com",
           phone: {
             area_code: "11",
