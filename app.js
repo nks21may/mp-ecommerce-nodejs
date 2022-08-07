@@ -4,9 +4,9 @@ require('dotenv').config()
 
 const mercadopago = require("mercadopago");
 const EXTERNAL_REFERENCE = process.env.EXTERNAL_REFERENCE || "nicolasdalessandro2@gmail.com";
+
 mercadopago.configure({
     access_token: process.env.PROD_ACCESS_TOKEN || "APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398",
-    client_id: process.env.PROD_CLIENT_ID || "APP_USR-ee70a80f-0848-4b7f-991d-497696acbdcd",
     integrator_id: process.env.PROD_INTEGRATOR_ID || "dev_24c65fb163bf11ea96500242ac130004"
 });
 
@@ -50,12 +50,12 @@ app.get("/detail", function (req, res) {
           email: "test_user_63274575@testuser.com",
           phone: {
             area_code: "11",
-            number: "22223333"
+            number: 22223333
           },
           address: {
             zip_code: "6300",
             street_name: "Falsa",
-            street_number: "123"
+            street_number: 123
           }
         },
         payment_methods: {
