@@ -70,7 +70,7 @@ app.get("/detail", function (req, res) {
           default_installments: 6,
         },
     };
-
+    console.log("preference: ", preference);
     mercadopago.preferences
       .create(preference)
       .then(function (response) {
