@@ -33,7 +33,7 @@ app.get("/detail", function (req, res) {
                 title: req.query.title,
                 description: "Dispositivo móvil de Tienda e-commerce",
                 picture_url: req.headers.host + req.query.img,
-                quantity: parseInt(req.query.unit) || 1,
+                quantity: 1,
                 unit_price: parseFloat(req.query.price),
             },
         ],
@@ -54,7 +54,7 @@ app.get("/detail", function (req, res) {
           },
           address: {
             zip_code: "6300",
-            street_name: "False",
+            street_name: "Falsa",
             street_number: "123"
           }
         },
