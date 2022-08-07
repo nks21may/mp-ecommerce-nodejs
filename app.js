@@ -44,6 +44,7 @@ app.get("/detail", function (req, res) {
           failure: req.headers.host + "/error"
         },
         auto_return: "approved",
+        notification_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/webhook",
         payer: {
           name: "Lalo",
           surname: "Landa",
@@ -66,7 +67,6 @@ app.get("/detail", function (req, res) {
           ],
           installments: 6,
           default_installments: 6,
-          notification_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/webhook",
         },
     };
 
