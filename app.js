@@ -3,11 +3,13 @@ var exphbs = require("express-handlebars");
 require('dotenv').config()
 
 const mercadopago = require("mercadopago");
+const EXTERNAL_REFERENCE = process.env.EXTERNAL_REFERENCE || "nicolasdalessandro2@gmail.com";
 mercadopago.configure({
-    access_token: process.env.PROD_ACCESS_TOKEN || "PROD_ACCESS_TOKEN",
+    access_token: process.env.PROD_ACCESS_TOKEN || "APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398",
+    client_id: process.env.PROD_CLIENT_ID || "APP_USR-ee70a80f-0848-4b7f-991d-497696acbdcd",
+    integrator_id: process.env.PROD_INTEGRATOR_ID || "dev_24c65fb163bf11ea96500242ac130004"
 });
 
-const EXTERNAL_REFERENCE = process.env.EXTERNAL_REFERENCE || "external_reference";
 var port = process.env.PORT || 3000;
 var app = express();
 
@@ -22,6 +24,7 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 
+/* This is the code that creates the preference and redirects to the checkout page. */
 app.get("/detail", function (req, res) {
     let preference = {
         items: [
@@ -36,34 +39,50 @@ app.get("/detail", function (req, res) {
         ],
         external_reference: EXTERNAL_REFERENCE,
         back_urls: {
-          success: "https://localhost:3000/success", 
-          pending: "https://localhost:3000.com/pending", 
-          failure: "https://localhost:3000.com/error"
+          success: req.headers.host + "/success", 
+          pending: req.headers.host + "/pending", 
+          failure: req.headers.host + "/error"
         },
         auto_return: "approved",
+        payer: {
+          name: "Lalo",
+          surname: "Landa",
+          email: "test_user_63274575@testuser.com",
+          phone: {
+            area_code: "11",
+            number: "22223333"
+          },
+          address: {
+            zip_code: "6300",
+            street_name: "False",
+            street_number: "123"
+          }
+        },
+        payment_methods: {
+          excluded_payment_methods: [
+            {
+              id: "visa",
+            },
+          ],
+          installments: 6,
+          default_installments: 6,
+          notification_url: req.headers.host + "/webhook",
+        },
     };
     
     mercadopago.preferences
-        .create(preference)
-        .then(function (response) {
-            let body = {
-              ... req.query,
-              preference_id: response.body.id,
-              init_point: response.body.init_point,
-              payment_methods: {
-                excluded_payment_methods: [
-                  {
-                    id: "visa",
-                  },
-                ],
-                installments: 6,
-              },
-            };
-            res.render("detail", body);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+      .create(preference)
+      .then(function (response) {
+          let body = {
+            ... req.query,
+            preference_id: response.body.id,
+            init_point: response.body.init_point,
+          };
+          res.render("detail", body);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
 });
 
 
@@ -80,6 +99,20 @@ app.get("/error", (req, res) => {
 /* Rendering the pending page. */
 app.get("/pending", (req, res) => {
   res.render("pending", req.query); 
+});
+
+app.get("/webhook", (req, res) => {
+  if (req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      console.log(body, "webhook response");
+      res.end("ok");
+    });
+  }
+  return res.status(201);
 });
 
 app.listen(port);
