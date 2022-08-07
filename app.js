@@ -32,7 +32,7 @@ app.get("/detail", function (req, res) {
                 id: "1234",
                 title: req.query.title,
                 description: "Dispositivo móvil de Tienda e-commerce",
-                picture_url: req.headers.host + req.query.img,
+                picture_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/" + req.query.img,
                 quantity: 1,
                 unit_price: parseFloat(req.query.price),
             },
@@ -66,10 +66,10 @@ app.get("/detail", function (req, res) {
           ],
           installments: 6,
           default_installments: 6,
-          notification_url: req.headers.host + "/webhook",
+          notification_url: "http://nks21may-mp-ecommerce-nodejs.herokuapp.com/webhook",
         },
     };
-    
+
     mercadopago.preferences
       .create(preference)
       .then(function (response) {
